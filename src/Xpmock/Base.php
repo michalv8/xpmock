@@ -1,7 +1,7 @@
 <?php
 namespace Xpmock;
 
-use PHPUnit_Framework_TestCase as PhpUnitTestCase;
+use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use PHPUnit_Framework_MockObject_Stub as Stub;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_MockObject_Matcher_InvokedRecorder as InvokedRecorder;
@@ -61,11 +61,9 @@ class Base
         if (is_null($expectation['will'])) {
             return;
         }
-        $expect = $reflection->hasMethod($expectation['method'])
-        && $reflection->getMethod($expectation['method'])->isStatic()
-            ? $mock::staticExpects($expectation['expects'])
-            : $mock->expects($expectation['expects']);
-        $expect->method($expectation['method'])
+        $expect = $mock
+            ->expects($expectation['expects'])
+            ->method($expectation['method'])
             ->will(
                 $expectation['will'] instanceof \Closure
                     ? PhpUnitTestCase::returnCallback(

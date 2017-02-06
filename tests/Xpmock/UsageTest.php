@@ -8,7 +8,7 @@ class UsageTest extends TestCase
 {
     private function cleanupMock($mock)
     {
-        $mock->__phpunit_cleanup();
+        $mock->this()->__phpunit_invocationMocker = null;
     }
 
     /** @return \Stubs\Usage */
@@ -77,7 +77,8 @@ class UsageTest extends TestCase
             $mock->getNumber();
             $mock->getNumber();
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\Exception $ex) {
+            $this->assertInstanceof(\PHPUnit\Framework\ExpectationFailedException::class, $ex);
         }
 
         $this->cleanupMock($mock);
@@ -93,7 +94,7 @@ class UsageTest extends TestCase
             $mock->getNumber();
             $this->verifyMockObjects();
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
         }
 
         $this->cleanupMock($mock);
@@ -121,7 +122,7 @@ class UsageTest extends TestCase
         try {
             $mock->getNumber();
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
         }
 
         $this->cleanupMock($mock);
@@ -138,7 +139,7 @@ class UsageTest extends TestCase
         try {
             $mock->getNumber();
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
         }
 
         $this->cleanupMock($mock);
@@ -155,7 +156,7 @@ class UsageTest extends TestCase
         try {
             $mock->getNumber(1, 2, 3);
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
         }
 
         $this->cleanupMock($mock);
@@ -181,13 +182,13 @@ class UsageTest extends TestCase
         try {
             $mock->getNumber();
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
         }
 
         try {
             $mock->getNumber(1, 2, 3);
             $this->fail();
-        } catch (\PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
         }
 
         $this->cleanupMock($mock);
@@ -217,27 +218,11 @@ class UsageTest extends TestCase
         $mock = $this->mock()
             ->method1(1)
             ->method2(2)
-            ->method3(
-                function () {
-                    return 3;
-                }
-            )->new();
+            ->new();
 
         $this->assertInstanceOf('stdClass', $mock);
         $this->assertSame(1, $mock->method1());
         $this->assertSame(2, $mock->method2());
-        $this->assertSame(3, $mock->method3());
-    }
-
-    public function testMockStaticMethod()
-    {
-        $mock = $this->mockUsage()
-            ->getString('fake string')
-            ->new();
-
-        $this->assertSame('fake string', $mock->getString());
-        $this->assertSame('fake string', $mock::getString());
-        $this->assertSame(1, $mock->getNumber());
     }
 
     public function testMockAbstractMethod()
@@ -258,8 +243,8 @@ class UsageTest extends TestCase
                 'getNumber' => 2,
                 'property' => 'fake property',
                 'getPropertyTwice' => function () {
-                        return $this->property . $this->property;
-                    },
+                    return $this->property . $this->property;
+                },
             )
         );
 
