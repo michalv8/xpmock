@@ -1,7 +1,7 @@
 <?php
 namespace Xpmock;
 
-use PHPUnit_Framework_TestCase as PhpUnitTestCase;
+use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 class MockWriter extends Base
@@ -19,9 +19,9 @@ class MockWriter extends Base
      * @param string $className
      * @param TestCase $testCase
      */
-    public function __construct($className, PhpUnitTestCase $testCase, $object = array())
+    public function __construct(string $className, PhpUnitTestCase $testCase, $object = array())
     {
-        $this->className = (string) $className;
+        $this->className = $className;
         $this->testCase = $testCase;
         $reflection = new \ReflectionClass($this->className);
         if (!is_array($object)) {
