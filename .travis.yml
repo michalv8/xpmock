@@ -1,8 +1,13 @@
+git:
+    depth: 1
+sudo: false
+cache:
+    directories:
+        - $HOME/.composer/cache
 language: php
-
 php:
-  - 5.3
-  - 5.4
-
+    - '7.0'
+install:
+    - export PATH="$HOME/.composer/vendor/bin:$PATH"
 before_script:
-    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
+    - composer install --prefer-dist -o --no-scripts
