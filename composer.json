@@ -1,5 +1,5 @@
 {
-    "name": "ptrofimov/xpmock",
+    "name": "michalv8/xpmock",
     "description": "PHPUnit: simple syntax to create mock-objects",
     "license": "MIT",
     "require": {
