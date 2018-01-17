@@ -2,10 +2,10 @@
 namespace Xpmock;
 
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use PHPUnit_Framework_MockObject_Stub as Stub;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use PHPUnit_Framework_MockObject_Matcher_InvokedRecorder as InvokedRecorder;
-use PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex as InvokedAtIndex;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Matcher\InvokedRecorder;
+use PHPUnit\Framework\MockObject\Matcher\InvokedAtIndex;
 
 class Base
 {

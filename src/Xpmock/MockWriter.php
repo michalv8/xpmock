@@ -2,7 +2,7 @@
 namespace Xpmock;
 
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class MockWriter extends Base
 {
