@@ -55,11 +55,9 @@ class UsageTest extends TestCase
         $this->assertSame(156, $mock->getNumber());
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testReturnThrowException()
     {
+        $this->expectException(\LogicException::class);
         $mock = $this->mockUsage()
             ->getNumber(new \LogicException())
             ->new();
@@ -92,23 +90,13 @@ class UsageTest extends TestCase
 
         try {
             $mock->getNumber();
-            $this->verifyMockObjects();
+            $mock->__phpunit_verify();
             $this->fail();
         } catch (\PHPUnit\Framework\ExpectationFailedException $ex) {
+            $this->assertTrue(true);
         }
 
         $this->cleanupMock($mock);
-    }
-
-    public function testExpectsAt()
-    {
-        $mock = $this->mockUsage()
-            ->getNumber(1, $this->at(0))
-            ->getNumber(2, $this->at(1))
-            ->new();
-
-        $this->assertEquals(1, $mock->getNumber());
-        $this->assertEquals(2, $mock->getNumber());
     }
 
     public function testWillExpects()
@@ -162,11 +150,9 @@ class UsageTest extends TestCase
         $this->cleanupMock($mock);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testWithWillInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->mockUsage()
             ->getNumber('not_array', 1);
     }
@@ -194,21 +180,17 @@ class UsageTest extends TestCase
         $this->cleanupMock($mock);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testWithWillExpectsInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->mockUsage()
             ->getNumber('not_array', 1, 1);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Value 900 from constructor
-     */
     public function testNew()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Value 900 from constructor');
         $this->mockUsage()
             ->new(900);
     }
