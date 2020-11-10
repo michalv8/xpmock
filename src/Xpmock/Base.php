@@ -1,11 +1,10 @@
 <?php
 namespace Xpmock;
 
+use PHPUnit\Framework\MockObject\Verifiable as PHPUnitVerifiable;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use PHPUnit_Framework_MockObject_Stub as Stub;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use PHPUnit_Framework_MockObject_Matcher_InvokedRecorder as InvokedRecorder;
-use PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex as InvokedAtIndex;
+use PHPUnit\Framework\MockObject\Stub\Stub as PHPUnitMockObjectStub;
+use PHPUnit\Framework\MockObject\MockObject as PHPUnitMockObject;
 
 class Base
 {
@@ -17,13 +16,13 @@ class Base
         $will = TestCase::returnValue(null);
 
         if (count($args) == 1) {
-            if ($args[0] instanceof InvokedRecorder || $args[0] instanceof InvokedAtIndex) {
+            if ($args[0] instanceof PHPUnitVerifiable) {
                 $expects = $args[0];
             } else {
                 $will = $args[0];
             }
         } elseif (count($args) == 2) {
-            if ($args[1] instanceof InvokedRecorder || $args[1] instanceof InvokedAtIndex) {
+            if ($args[1] instanceof PHPUnitVerifiable) {
                 if (is_array($args[0])) {
                     list($with, $expects) = $args;
                 } else {
@@ -35,7 +34,7 @@ class Base
                 throw new \InvalidArgumentException();
             }
         } elseif (count($args) == 3) {
-            if (is_array($args[0]) && ($args[2] instanceof InvokedRecorder || $args[2] instanceof InvokedAtIndex)) {
+            if (is_array($args[0]) && ($args[2] instanceof PHPUnitVerifiable)) {
                 list($with, $will, $expects) = $args;
             } else {
                 throw new \InvalidArgumentException();
@@ -44,7 +43,7 @@ class Base
 
         if ($will instanceof \Exception) {
             $will = PhpUnitTestCase::throwException($will);
-        } elseif (!$will instanceof Stub && !$will instanceof \Closure && !is_null($will)) {
+        } elseif (!$will instanceof PHPUnitMockObjectStub && !$will instanceof \Closure && !is_null($will)) {
             $will = PhpUnitTestCase::returnValue($will);
         }
 
@@ -56,7 +55,7 @@ class Base
         );
     }
 
-    protected function addMethodExpectation(\ReflectionClass $reflection, MockObject $mock, array $expectation)
+    protected function addMethodExpectation(\ReflectionClass $reflection, PHPUnitMockObject $mock, array $expectation)
     {
         if (is_null($expectation['will'])) {
             return;
