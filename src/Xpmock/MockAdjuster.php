@@ -1,19 +1,19 @@
 <?php
 namespace Xpmock;
 
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject as PHPUnitMockObject;
 
 class MockAdjuster extends Base
 {
-    /** @var MockObject */
+    /** @var PHPUnitMockObject */
     private $mock;
     /** @var \ReflectionClass */
     private $reflection;
 
     /**
-     * @param MockObject $mock
+     * @param PHPUnitMockObject $mock
      */
-    public function __construct(MockObject $mock, \ReflectionClass $reflection)
+    public function __construct(PHPUnitMockObject $mock, \ReflectionClass $reflection)
     {
         $this->mock = $mock;
         $this->reflection = $reflection;

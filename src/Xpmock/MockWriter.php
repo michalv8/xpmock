@@ -2,7 +2,7 @@
 namespace Xpmock;
 
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject as PHPUnitMockObject;
 
 class MockWriter extends Base
 {
@@ -40,7 +40,7 @@ class MockWriter extends Base
         }
     }
 
-    /** @return self|MockObject */
+    /** @return self|PHPUnitMockObject */
     public function __call($method, array $args)
     {
         return $method == 'new'
@@ -48,7 +48,7 @@ class MockWriter extends Base
             : $this->addMethod($method, $args);
     }
 
-    /** @return MockObject */
+    /** @return PHPUnitMockObject */
     private function buildMock(array $args)
     {
         $mockBuilder = $this->testCase->getMockBuilder($this->className);

@@ -8,7 +8,7 @@ class ReflectionTest extends TestCase
     private $privateProperty;
     private static $privateStaticProperty;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
